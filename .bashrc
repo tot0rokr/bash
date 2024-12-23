@@ -243,13 +243,22 @@ if [ $(lsb_release -i | awk '{print $3}') == "Ubuntu" ]; then
         fi
     fi
 
-    if [ -z $(which vim) ]; then
-        if [ -z $(which add-apt-repository) ]; then
-            sudo apt install -y software-properties-common
+    # if [ -z $(which vim) ]; then
+    #     if [ -z $(which add-apt-repository) ]; then
+    #         sudo apt install -y software-properties-common
+    #     fi
+    #     sudo add-apt-repository ppa:jonathonf/vim
+    #     sudo apt update
+    #     sudo apt install -y vim
+    # fi
+
+    if [ -z $(which nvim) ]; then
+        export PATH="$PATH:/opt/nvim-linux64/bin"
+        if [ -z $(which nvim) ]; then
+            curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+            sudo rm -rf /opt/nvim
+            sudo tar -C /opt -xzf nvim-linux64.tar.gz
         fi
-        sudo add-apt-repository ppa:jonathonf/vim
-        sudo apt update
-        sudo apt install -y vim
     fi
 
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
